@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+
+        backend:
+                build: ./backend
+                expose:
+                        - ${PORT}
+                environment:
+                        APPID: ${APPID}
+                        PORT: ${PORT}
+                        CHOKIDAR_USEPOLLING=true
+                volumes:
+                        - '.:/app'
+                        - '/app/backend/node_modules'
+                ports:
+                        - ${PORT}:${PORT}
+                command: npm start
+
+
+        frontend:
+                build: ./frontend
+                expose:
+                        - ${REACT_PORT}
+                environment:
+                        - ENDPOINT=${ENDPOINT}
+                        - NODE_ENV=development
+                        - CHOKIDAR_USEPOLLING=true
+                volumes:
+                        - '.:/app'
+                        - '/app/frontend/node_modules'
+                ports:
+                        - ${REACT_PORT}:${REACT_PORT}
+                links:
+                        - backend
+                command: npm start
+
