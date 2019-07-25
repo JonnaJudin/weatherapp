@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+        backend:
+                build: ./backend
+                expose:
+                        - ${PORT}
+                environment:
+                        APPID: ${APPID}
+                        PORT: ${PORT}
+                ports:
+                        - ${PORT}:${PORT}
+                command: npm start
+
+
+        frontend:
+                build: ./frontend
+                expose:
+                        - ${REACT_PORT}
+                environment:
+                        - ENDPOINT=${ENDPOINT}
+                ports:
+                        - ${REACT_PORT}:${REACT_PORT}
+                links:
+                        - backend
+                command: npm start
+
