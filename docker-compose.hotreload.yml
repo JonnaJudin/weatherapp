@@ -34,4 +34,3 @@ services:
                 links:
                         - backend
                 command: npm start
-
